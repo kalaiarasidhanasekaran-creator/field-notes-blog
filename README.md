@@ -1,36 +1,29 @@
-# Field Notes — personal blog
+# The Art of Being Kalai
 
-A responsive, static personal blog. It has topic filters, search, article reader dialogs, a saved light/dark theme, and no build step or server requirement.
+A small multi-page personal site with a searchable journal, a portfolio gallery, a publish guide, responsive layouts, and a saved light/dark theme. The collage artwork uses CSS shapes and gentle 3D transforms; no image library or build process is required.
 
-## Preview locally
+## Pages
 
-Open `index.html` in a browser. Fonts load from Google Fonts; the page uses system fallbacks if those fonts are unavailable.
+- `index.html` — journal with topic filters, search, and article reader
+- `portfolio.html` — portfolio mosaic with category filters
+- `publish.html` — step-by-step instructions for adding stories and projects
 
-## Make it yours
+## Add a journal post
 
-1. In `index.html`, change the `Field Notes` site name, headline, intro, about text, and `hello@example.com` email address.
-2. In `app.js`, replace the six clearly marked starter/example posts with your own writing. Each post has an `id`, `category` (`Technology`, `Life`, or `Ideas`), `date` (`YYYY-MM-DD`), `title`, `excerpt`, `icon`, `read`, `subtitle`, and `body` (an array of paragraphs).
-3. Add a new object to the `posts` array in `app.js`. To add a topic, add a filter button in `index.html` with `data-filter="Your topic"`.
-4. Update the description and page title in `index.html`.
+Open `app.js` and add an object to the `posts` array. Keep the fields shown by the example on the Publish page. Categories are `Technology`, `Life`, and `Ideas`. Commit the edit in GitHub, and Pages publishes the update.
 
-The sample articles are generic starter copy, not personal facts about the site owner. Replace them before sharing if you want the journal to contain only your words.
+## Add portfolio work
 
-## Publish with GitHub Pages
+1. Upload an image into the repository.
+2. Add a project entry to the `projects` array in `portfolio.js`.
+3. Set its `image` path (for example, `image: 'my-work.jpg'`) and add a caption, category, title, and short description. The included tiles are CSS starter artwork to replace with your own portfolio images.
 
-1. Create a new, empty repository on GitHub.
-2. From this folder, run:
+## Update on GitHub
 
-   ```powershell
-   git init
-   git add .
-   git commit -m "Build personal blog"
-   git branch -M main
-   git remote add origin https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
-   git push -u origin main
-   ```
+The site lives at https://kalaiarasidhanasekaran-creator.github.io/field-notes-blog/ and its public repository is https://github.com/kalaiarasidhanasekaran-creator/field-notes-blog. To write directly in your browser, open `app.js` or `portfolio.js` in the repository and choose the pencil icon. Save with **Commit changes**; GitHub Pages rebuilds the site automatically.
 
-3. In the repository on GitHub, open **Settings → Pages**.
-4. Under **Build and deployment**, select **Deploy from a branch**, choose `main` and `/(root)`, then save.
-5. GitHub will show the published site URL in the Pages section after its first deployment.
+For local work, clone the repository, edit files, then run `git add .`, `git commit -m "Add a new post"`, and `git push` from your project folder.
 
-No domain, credentials, tracking scripts, or backend are required. Posts are edited in `app.js` and published through a Git commit and push. To add a custom domain later, configure it in GitHub Pages and point your domain's DNS records to GitHub Pages.
+## Run locally
+
+Open `index.html` in a browser. Google Fonts load online, with system fallbacks available offline.
