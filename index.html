@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f4ee">
+  <meta name="description" content="A personal blog for technical notes, everyday stories, and everything in between.">
+  <title>Field Notes — a personal blog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="site-shell">
+    <header class="topbar">
+      <a class="wordmark" href="#home" aria-label="Field Notes home"><span class="wordmark-mark">fn.</span><span>FIELD NOTES</span></a>
+      <nav aria-label="Main navigation">
+        <a class="nav-link active" href="#home">Journal</a>
+        <a class="nav-link" href="#about">About</a>
+        <a class="nav-link" href="#archive">Archive</a>
+      </nav>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch color theme"><span aria-hidden="true">◐</span><span class="toggle-label">Light</span></button>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="home">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="live-dot"></span> A PERSONAL CORNER OF THE INTERNET</p>
+          <h1>Curious by nature.<br><em>Writing it down.</em></h1>
+          <p class="hero-intro">Notes from a life spent making things, learning things, and noticing the little things in between.</p>
+          <a class="text-link" href="#journal">Come on in <span aria-hidden="true">↘</span></a>
+        </div>
+        <div class="hero-art" aria-label="Abstract illustration of a sun setting behind layered hills" role="img">
+          <div class="sun"></div><div class="hill hill-back"></div><div class="hill hill-front"></div>
+          <span class="art-caption">FIG. 01 &nbsp;–&nbsp; SOMEWHERE IN BETWEEN</span>
+          <span class="art-spark spark-one">✳</span><span class="art-spark spark-two">✳</span>
+        </div>
+        <div class="hero-stamp"><span>PERSONAL<br>NOTES</span><span class="stamp-star">✳</span></div>
+      </section>
+
+      <section class="journal-section" id="journal">
+        <div class="section-heading">
+          <div><p class="eyebrow">THE JOURNAL <span class="heading-rule"></span></p><h2>Latest thoughts<span class="period">.</span></h2></div>
+          <p class="section-note">An open notebook for the things<br>worth remembering.</p>
+        </div>
+        <div class="toolbar" id="archive">
+          <div class="filters" role="group" aria-label="Filter posts by topic">
+            <button class="filter-chip selected" data-filter="All" type="button">All notes <span id="all-count">00</span></button>
+            <button class="filter-chip" data-filter="Technology" type="button">Technology</button>
+            <button class="filter-chip" data-filter="Life" type="button">Life</button>
+            <button class="filter-chip" data-filter="Ideas" type="button">Ideas</button>
+          </div>
+          <label class="search-box"><span aria-hidden="true">⌕</span><span class="sr-only">Search posts</span><input id="search" type="search" placeholder="Search the journal…" autocomplete="off"></label>
+        </div>
+        <div class="post-grid" id="post-grid" aria-live="polite"></div>
+        <p class="empty-state" id="empty-state" hidden>No notes found. Try a different topic or search.</p>
+        <div class="journal-footer"><span id="post-total">0 NOTES IN THE JOURNAL</span><span>MORE THOUGHTS, WHEN THEY'RE READY <span aria-hidden="true">✳</span></span></div>
+      </section>
+
+      <section class="about-section" id="about">
+        <div class="about-mark" aria-hidden="true">✳</div>
+        <div class="about-copy"><p class="eyebrow">A LITTLE ABOUT THIS SPACE</p><h2>Made for the things<br>that don’t fit in a feed.</h2></div>
+        <div class="about-detail"><p>This is a home for my own words: what I’m building, what I’m learning, the places I go, and the thoughts I don’t want to lose.</p><p>Pull up a chair. There’s room for all of it here.</p><a class="text-link" href="mailto:hello@example.com">Say hello <span aria-hidden="true">↗</span></a></div>
+      </section>
+    </main>
+
+    <footer class="footer"><a class="wordmark" href="#home"><span class="wordmark-mark">fn.</span><span>FIELD NOTES</span></a><span>Written at my own pace, on the internet.</span><a href="#home">BACK TO TOP ↑</a></footer>
+  </div>
+
+  <dialog class="reader" id="reader" aria-labelledby="reader-title"><div class="reader-bar"><span class="reader-brand">FIELD NOTES / JOURNAL</span><button class="reader-close" id="reader-close" aria-label="Close article" type="button">✕</button></div><article class="reader-content"><div class="reader-meta"><span id="reader-category"></span><span id="reader-date"></span></div><h2 id="reader-title"></h2><p class="reader-subtitle" id="reader-subtitle"></p><div class="reader-divider">✳ &nbsp; ✳ &nbsp; ✳</div><div class="reader-body" id="reader-body"></div><p class="reader-signoff">Thanks for reading. <span>✳</span></p></article></dialog>
+</body>
+</html>
