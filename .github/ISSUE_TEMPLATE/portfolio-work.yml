@@ -1,0 +1,36 @@
+name: Add a portfolio piece
+about: Share a project, creative experiment, technical work, or writing
+title: "WORK · "
+labels: []
+body:
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - Creative
+        - Technology
+        - Writing
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What did you make, and what would you like people to know about it?
+      placeholder: Tell the story behind your work…
+      render: markdown
+    validations:
+      required: true
+  - type: input
+    id: link
+    attributes:
+      label: Project link
+      description: Optional website, demo, or repository link.
+      placeholder: https://
+  - type: textarea
+    id: image
+    attributes:
+      label: Image
+      description: Optional. Paste a publicly accessible image URL, or attach an image after submitting.
+      placeholder: https://…
