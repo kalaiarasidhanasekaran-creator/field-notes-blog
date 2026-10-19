@@ -11,8 +11,10 @@ const empty = document.querySelector('#empty-state');
 let posts = [], activeFilter = 'All';
 const esc = value => String(value || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const section = (body, name) => {
-  const match = body.match(new RegExp(`^###\\s+${name}\\s*\\r?\\n([\\s\\S]*?)(?=^###\\s+|\\s*$)`, 'mi'));
-  return match ? match[1].trim() : '';
+  const heading = new RegExp('^###\\s+' + name + '\\s*\\r?\\n', 'mi');
+  const match = heading.exec(body); if (!match) return '';
+  const start = match.index + match[0].length; const next = body.indexOf('\n### ', start);
+  return body.slice(start, next < 0 ? body.length : next).trim();
 };
 const dateLabel = value => new Intl.DateTimeFormat('en',{year:'numeric',month:'short',day:'numeric'}).format(new Date(value));
 function render() {
@@ -58,3 +60,4 @@ const themeButton=document.querySelector('#theme-toggle');
 function setTheme(dark){document.body.classList.toggle('dark',dark);themeButton.querySelector('.toggle-label').textContent=dark?'Dark':'Light';themeButton.setAttribute('aria-label',dark?'Switch to light theme':'Switch to dark theme');localStorage.setItem('field-notes-theme',dark?'dark':'light');}
 setTheme(localStorage.getItem('field-notes-theme')==='dark');themeButton.addEventListener('click',()=>setTheme(!document.body.classList.contains('dark')));
 loadPosts();
+
