@@ -1,0 +1,32 @@
+name: Write a journal story
+about: Add a technical note, life story, idea, or anything in your own words
+title: "JOURNAL · "
+labels: []
+body:
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - Technology
+        - Life
+        - Ideas
+    validations:
+      required: true
+  - type: input
+    id: intro
+    attributes:
+      label: Short introduction
+      description: One or two lines to invite people into your story.
+      placeholder: What is this story about?
+    validations:
+      required: true
+  - type: textarea
+    id: story
+    attributes:
+      label: Your story
+      description: Write freely. Separate paragraphs with a blank line; Markdown is welcome.
+      placeholder: Start writing here, in your own words…
+      render: markdown
+    validations:
+      required: true
