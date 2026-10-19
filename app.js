@@ -1,20 +1,60 @@
-// Starter articles are examples. Replace their words with your own before publishing.
-const posts = [
-  {id:1,category:'Technology',date:'2026-10-12',title:'The small joy of making something work',excerpt:'A few notes on the feeling of a bug finally giving up, and why the little wins count.',icon:'⌘',read:'4 MIN READ',subtitle:'On the satisfying, stubborn, very human process of figuring things out.',body:[`There is a particular kind of quiet that arrives when a stubborn bug finally disappears. The screen does not celebrate. No confetti falls. The thing simply works, and for a second the whole afternoon feels a little lighter.`,`I used to think progress should feel dramatic. Lately I am learning to count the small things: a clearer error message, a function with a name that makes sense, a question I finally know how to ask. Those moments are the work, too.`,`This is a note to remember that making things is mostly a collection of small decisions. Each one is worth noticing.`]},
-  {id:2,category:'Life',date:'2026-10-06',title:'A slower Sunday, by design',excerpt:'Coffee gone cold, a long walk with nowhere to be, and the luxury of an unfinished to-do list.',icon:'☼',read:'3 MIN READ',subtitle:'A small defense of leaving a little room in the day.',body:[`The best part of this Sunday was that nothing important happened. The coffee cooled while I read a few pages. A walk turned into a longer walk because there was no reason to turn around yet.`,`I have a habit of treating open time as a problem to solve. But the ordinary hours can be the point: a conversation without watching the clock, a meal that takes as long as it takes, sunlight moving slowly across the room.`,`Maybe next weekend I will leave a little more room for nothing in particular.`]},
-  {id:3,category:'Ideas',date:'2026-09-28',title:'Keep a notebook for the questions',excerpt:'Not answers. Not plans. Just the questions that keep tugging at your sleeve.',icon:'✳',read:'5 MIN READ',subtitle:'A pocket-sized practice for paying closer attention.',body:[`Some thoughts arrive as questions and leave if I do not catch them. Why does this work the way it does? What did I mean when I said I wanted more time? What would happen if I tried the smaller version first?`,`I started writing those questions down without asking them to earn their place. The notebook is not a productivity system. It does not expect a resolution. Sometimes I return with an answer; more often, I return with a better question.`,`There is a little freedom in letting curiosity stay open for a while.`]},
-  {id:4,category:'Technology',date:'2026-09-17',title:'Learning in public (and getting it wrong)',excerpt:'A reminder that the first draft of understanding is allowed to be a little messy.',icon:'⌘',read:'6 MIN READ',subtitle:'Notes from the useful middle between knowing nothing and knowing enough.',body:[`When I learn something new, there is a tempting stretch where I think I should wait to talk about it until I can explain it perfectly. That moment never quite comes.`,`Writing things down helps me see the gaps. Explaining a concept in ordinary words forces me to notice when I have memorized a phrase but missed the idea underneath. Being a beginner in public can feel awkward, but it also leaves a trail somebody else might find useful.`,`This blog is one place I can leave that trail: the experiments, the wrong turns, and what finally made sense.`]},
-  {id:5,category:'Life',date:'2026-09-02',title:'Things I want to remember from this month',excerpt:'The names of the songs, the late light in the kitchen, and one conversation I keep replaying.',icon:'☼',read:'3 MIN READ',subtitle:'A monthly ritual for keeping the ordinary close.',body:[`At the end of the month I try to write down a few details before they blur. Not the milestones. The texture: the song I played on repeat, the long light in the kitchen after dinner, the conversation that followed me home.`,`It is easy to remember what filled the calendar. I want to get better at remembering how the days actually felt.`,`Here is to keeping a few small things close.`]},
-  {id:6,category:'Ideas',date:'2026-08-21',title:'What this little corner is for',excerpt:'A note about making a home online that feels more like a conversation than a performance.',icon:'✳',read:'2 MIN READ',subtitle:'An invitation to be a person on the internet, at my own pace.',body:[`I wanted somewhere on the internet that felt like mine: a place for technical notes, passing thoughts, everyday stories, and the things that do not fit neatly into a feed.`,`This site is a small experiment in sharing without rushing. I hope to leave useful details here, and maybe a few familiar ones too.`,`Thanks for stopping by. Make yourself at home.`]}
-];
-
-const grid=document.querySelector('#post-grid'), search=document.querySelector('#search'), empty=document.querySelector('#empty-state');
-let activeFilter='All';
-const dateLabel=value=>new Intl.DateTimeFormat('en',{year:'numeric',month:'short',day:'numeric',timeZone:'UTC'}).format(new Date(`${value}T00:00:00Z`));
-function render(){const term=search.value.trim().toLowerCase();const shown=posts.filter(p=>(activeFilter==='All'||p.category===activeFilter)&&(!term||`${p.title} ${p.excerpt} ${p.category} ${p.body.join(' ')}`.toLowerCase().includes(term)));grid.innerHTML=shown.map(p=>`<article class="post-card" tabindex="0" role="button" aria-label="Read ${escapeHtml(p.title)}" data-id="${p.id}"><div class="card-top"><span class="category">${escapeHtml(p.category)}</span><span class="card-icon" aria-hidden="true">${p.icon}</span></div><h3>${escapeHtml(p.title)}</h3><p>${escapeHtml(p.excerpt)}</p><div class="card-bottom"><span>${dateLabel(p.date).toUpperCase()} &nbsp;·&nbsp; ${escapeHtml(p.read)}</span><span class="card-arrow" aria-hidden="true">↗</span></div></article>`).join('');empty.hidden=shown.length>0;document.querySelector('#all-count').textContent=String(posts.length).padStart(2,'0');document.querySelector('#post-total').textContent=`${String(posts.length).padStart(2,'0')} NOTES IN THE JOURNAL`;}
-function escapeHtml(value){return String(value).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));}
-const dialog=document.querySelector('#reader');
-function openPost(id){const post=posts.find(p=>p.id===Number(id));if(!post)return;document.querySelector('#reader-category').textContent=post.category.toUpperCase();document.querySelector('#reader-date').textContent=dateLabel(post.date).toUpperCase();document.querySelector('#reader-title').textContent=post.title;document.querySelector('#reader-subtitle').textContent=post.subtitle;document.querySelector('#reader-body').innerHTML=post.body.map(p=>`<p>${escapeHtml(p)}</p>`).join('');dialog.showModal();}
-grid.addEventListener('click',e=>{const card=e.target.closest('.post-card');if(card)openPost(card.dataset.id)});grid.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches('.post-card')){e.preventDefault();openPost(e.target.dataset.id)}});search.addEventListener('input',render);document.querySelectorAll('.filter-chip').forEach(btn=>btn.addEventListener('click',()=>{document.querySelector('.filter-chip.selected').classList.remove('selected');btn.classList.add('selected');activeFilter=btn.dataset.filter;render()}));document.querySelector('#reader-close').addEventListener('click',()=>dialog.close());dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close()});
-const themeButton=document.querySelector('#theme-toggle');function setTheme(dark){document.body.classList.toggle('dark',dark);themeButton.querySelector('.toggle-label').textContent=dark?'Dark':'Light';themeButton.setAttribute('aria-label',dark?'Switch to light theme':'Switch to dark theme');localStorage.setItem('field-notes-theme',dark?'dark':'light')}setTheme(localStorage.getItem('field-notes-theme')==='dark');themeButton.addEventListener('click',()=>setTheme(!document.body.classList.contains('dark')));
-render();
+const REPO = 'kalaiarasidhanasekaran-creator/field-notes-blog';
+const WRITE_URL = `https://github.com/${REPO}/issues/new?template=journal-post.yml`;
+const CATEGORY_IMAGES = {
+  Technology: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1000&q=85',
+  Life: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=85',
+  Ideas: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=1000&q=85'
+};
+const grid = document.querySelector('#post-grid');
+const search = document.querySelector('#search');
+const empty = document.querySelector('#empty-state');
+let posts = [], activeFilter = 'All';
+const esc = value => String(value || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const section = (body, name) => {
+  const match = body.match(new RegExp(`^###\\s+${name}\\s*\\r?\\n([\\s\\S]*?)(?=^###\\s+|\\s*$)`, 'mi'));
+  return match ? match[1].trim() : '';
+};
+const dateLabel = value => new Intl.DateTimeFormat('en',{year:'numeric',month:'short',day:'numeric'}).format(new Date(value));
+function render() {
+  const term = search.value.trim().toLowerCase();
+  const shown = posts.filter(p => (activeFilter === 'All' || p.category === activeFilter) && (!term || `${p.title} ${p.excerpt} ${p.category} ${p.story}`.toLowerCase().includes(term)));
+  grid.innerHTML = shown.map(p => `<article class="post-card" tabindex="0" role="button" aria-label="Read ${esc(p.title)}" data-id="${p.id}"><div class="post-cover" style="background-image:url('${CATEGORY_IMAGES[p.category] || CATEGORY_IMAGES.Life}')"><span>${esc(p.category)}</span><span class="cover-glyph">✳</span></div><div class="post-card-copy"><div class="card-top"><span class="category">A NOTE FROM KALAI</span><span class="card-icon">↗</span></div><h3>${esc(p.title)}</h3><p>${esc(p.excerpt)}</p><div class="card-bottom"><span>${dateLabel(p.date).toUpperCase()}</span><span class="card-arrow">READ ↗</span></div></div></article>`).join('');
+  empty.hidden = shown.length > 0;
+  if (!shown.length) empty.innerHTML = posts.length ? 'No notes found. <a href="' + WRITE_URL + '">Write a new one ↗</a>' : `Your journal starts here. <a href="${WRITE_URL}">Write your first story ↗</a>`;
+  document.querySelector('#all-count').textContent = String(posts.length).padStart(2,'0');
+  document.querySelector('#post-total').textContent = `${String(posts.length).padStart(2,'0')} NOTES IN THE JOURNAL`;
+}
+const dialog = document.querySelector('#reader');
+function openPost(id) {
+  const post = posts.find(p => String(p.id) === String(id)); if (!post) return;
+  document.querySelector('#reader-category').textContent = post.category.toUpperCase();
+  document.querySelector('#reader-date').textContent = dateLabel(post.date).toUpperCase();
+  document.querySelector('#reader-title').textContent = post.title;
+  document.querySelector('#reader-subtitle').textContent = post.excerpt;
+  document.querySelector('#reader-body').innerHTML = post.story.split(/\n\s*\n/).map(p => `<p>${esc(p).replace(/\n/g,'<br>')}</p>`).join('');
+  dialog.showModal();
+}
+grid.addEventListener('click', e => { const card=e.target.closest('.post-card'); if(card) openPost(card.dataset.id); });
+grid.addEventListener('keydown', e => { if((e.key==='Enter'||e.key===' ')&&e.target.matches('.post-card')){e.preventDefault();openPost(e.target.dataset.id);} });
+search.addEventListener('input', render);
+document.querySelectorAll('.filter-chip').forEach(btn => btn.addEventListener('click',()=>{document.querySelector('.filter-chip.selected').classList.remove('selected');btn.classList.add('selected');activeFilter=btn.dataset.filter;render();}));
+document.querySelector('#reader-close').addEventListener('click',()=>dialog.close());
+dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close();});
+async function loadPosts() {
+  try {
+    const res = await fetch(`https://api.github.com/repos/${REPO}/issues?state=all&sort=created&direction=desc&per_page=100`, {headers:{Accept:'application/vnd.github+json'}});
+    if (!res.ok) throw new Error('Could not reach the journal.');
+    posts = (await res.json()).filter(i => !i.pull_request && i.title.startsWith('JOURNAL · ')).map(i => {
+      const cat = section(i.body || '', 'Category');
+      const category = ['Technology','Life','Ideas'].includes(cat) ? cat : 'Life';
+      return {id:i.number,title:i.title.replace('JOURNAL · ','').trim(),category,date:i.created_at,excerpt:section(i.body||'','Short introduction')||section(i.body||'','Subtitle'),story:section(i.body||'','Your story')||section(i.body||'','Story')};
+    }).filter(p=>p.title && p.story);
+  } catch (err) {
+    empty.hidden=false; empty.textContent='Journal posts could not load just now. Refresh the page to try again.';
+  }
+  render();
+}
+const themeButton=document.querySelector('#theme-toggle');
+function setTheme(dark){document.body.classList.toggle('dark',dark);themeButton.querySelector('.toggle-label').textContent=dark?'Dark':'Light';themeButton.setAttribute('aria-label',dark?'Switch to light theme':'Switch to dark theme');localStorage.setItem('field-notes-theme',dark?'dark':'light');}
+setTheme(localStorage.getItem('field-notes-theme')==='dark');themeButton.addEventListener('click',()=>setTheme(!document.body.classList.contains('dark')));
+loadPosts();
